@@ -18,7 +18,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"client": [
-			"com.github.nyuppo.HotbarcycleClient"
+			"com.github.nyuppo.HotbarCycleClient"
 		],
 		"modmenu": [
 			"com.github.nyuppo.config.ModMenuIntegration"

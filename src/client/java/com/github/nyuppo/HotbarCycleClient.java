@@ -44,8 +44,8 @@ public class HotbarCycleClient implements ClientModInitializer {
         return singleCycleKeyBinding;
     }
 
-    @Override
-    public void onInitializeClient() {
+	@Override
+	public void onInitializeClient() {
         clicker = getClicker();
 
         cycleKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -97,7 +97,7 @@ public class HotbarCycleClient implements ClientModInitializer {
         ClientPlayerInteractionManager interactionManager = client.interactionManager;
         if (interactionManager == null || client.player == null) {
             return;
-        }
+	}
 
         int i;
         if (direction != Direction.DOWN ? CONFIG.getEnableRow1() : CONFIG.getEnableRow3()) {
@@ -153,7 +153,7 @@ public class HotbarCycleClient implements ClientModInitializer {
 
         if (CONFIG.getPlaySound()) {
             client.player.playSoundToPlayer(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.MASTER, 0.5f, 1.8f);
-        }
+}
     }
 
     private static Clicker getClicker() {
