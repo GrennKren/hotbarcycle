@@ -1,40 +1,43 @@
 {
-  "schemaVersion": 1,
-  "id": "hotbarcycle",
-  "version": "${version}",
-
-  "name": "Hotbar Cycle",
-  "description": "Navigate your inventory with a Stardew Valley inspired hotbar cycling method.",
-  "authors": [
-    "nyuppo"
-  ],
-  "contributors": [
-    "darmiel"
-  ],
-  "contact": {
-    "homepage": "https://github.com/nyuppo/hotbarcycle"
-  },
-
-  "license": "CC0-1.0",
-  "icon": "assets/hotbarcycle/icon.png",
-
-  "environment": "client",
-  "entrypoints": {
-    "client": [
-      "com.github.nyuppo.HotbarCycleClient"
-    ],
-    "modmenu": [
-      "com.github.nyuppo.config.ModMenuIntegration"
-    ]
-  },
-  "mixins": [
-    "hotbarcycle.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.15.11",
-    "minecraft": "~1.21",
-    "java": ">=21",
-    "fabric-api": "*"
-  }
+	"schemaVersion": 1,
+	"id": "hotbarcycle",
+	"version": "${version}",
+	"name": "Hotbar Cycle",
+	"description": "Navigate your inventory with a Stardew Valley inspired hotbar cycling method.",
+	"authors": [
+		"nyuppo"
+	],
+	"contributors": [
+		"darmiel"
+	],
+	"contact": {
+		"homepage": "https://github.com/nyuppo/hotbarcycle"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/hotbarcycle/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.github.nyuppo.HotbarcycleClient"
+		],
+		"modmenu": [
+			"com.github.nyuppo.config.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		"hotbarcycle.mixins.json",
+		{
+			"config": "hotbarcycle.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }
