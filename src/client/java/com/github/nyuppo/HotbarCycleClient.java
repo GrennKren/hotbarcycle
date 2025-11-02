@@ -32,6 +32,9 @@ public class HotbarCycleClient implements ClientModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("hotbarcycle");
 
+    // TAMBAHKAN variabel untuk tracking scroll
+    private static double pendingScrollAmount = 0;
+
     public static HotbarCycleConfig getConfig() {
         return CONFIG;
     }
@@ -75,6 +78,38 @@ public class HotbarCycleClient implements ClientModInitializer {
                 }
             }
         });
+
+        // TAMBAHKAN: Event untuk repeat slot to cycle
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player == null || client.player.getInventory() == null) return;
+
+            if (CONFIG.getRepeatSlotToCycle()) {
+                int selectedSlot = client.player.getInventory().selectedSlot;
+                if (client.options.hotbarKeys[selectedSlot].wasPressed()) {
+                    shiftSingle(client, selectedSlot, Direction.DOWN);
+                }
+            }
+        });
+
+        // TAMBAHKAN: Event untuk hold-and-scroll mode
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player == null || client.player.getInventory() == null) return;
+
+            // Proses scroll yang pending
+            if (pendingScrollAmount != 0 && CONFIG.getHoldAndScroll()) {
+                final Direction direction = Math.signum(pendingScrollAmount) < 0
+                        ? Direction.UP
+                        : Direction.DOWN;
+
+                if (cycleKeyBinding.isPressed()) {
+                    shiftRows(client, direction);
+                    pendingScrollAmount = 0; // Reset setelah diproses
+                } else if (singleCycleKeyBinding.isPressed()) {
+                    shiftSingle(client, client.player.getInventory().selectedSlot, direction);
+                    pendingScrollAmount = 0; // Reset setelah diproses
+                }
+            }
+        });
     }
 
     public enum Direction {
@@ -93,7 +128,6 @@ public class HotbarCycleClient implements ClientModInitializer {
         // invert direction if reverse cycle is enabled
         final Direction direction = requestedDirection.reverse(CONFIG.getReverseCycleDirection());
 
-        @SuppressWarnings("resource")
         ClientPlayerInteractionManager interactionManager = client.interactionManager;
         if (interactionManager == null || client.player == null) {
             return;
@@ -133,7 +167,6 @@ public class HotbarCycleClient implements ClientModInitializer {
         // invert direction if reverse cycle is enabled
         final Direction direction = requestedDirection.reverse(CONFIG.getReverseCycleDirection());
 
-        @SuppressWarnings("resource")
         ClientPlayerInteractionManager interactionManager = client.interactionManager;
         if (interactionManager == null || client.player == null) {
             return;

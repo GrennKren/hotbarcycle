@@ -3,8 +3,7 @@
 	"package": "com.github.nyuppo.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ScrollCycleMixin",
-		"RepeatClickCycleMixin"
+		"ScrollCycleMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
